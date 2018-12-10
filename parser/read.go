@@ -2,8 +2,8 @@ package parser
 
 import (
 	"bufio"
-	"os"
 	"gopkg.in/russross/blackfriday.v2"
+	"os"
 )
 
 func Read(filename string, parse bool) string {

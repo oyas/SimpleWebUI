@@ -1,6 +1,5 @@
 
 function clear_connection_status_text(){
-	//document.getElementById("connection_status").innerText = "";
 	$("#connection_status").html("");
 }
 
@@ -42,7 +41,6 @@ window.onload = function () {
 		console.log("Connecting...");
 		conn = new WebSocket("ws://" + document.location.host + "/ws");
 		conn.onopen = function (evt) {
-			//document.getElementById("connection_status").innerText = "Connected.";
 			$("#connection_status").html("<span style=\"color: green;\">Connected.</span>");
 			setTimeout(clear_connection_status_text, 2000);
 			console.log("Connected.");
@@ -50,36 +48,18 @@ window.onload = function () {
 		conn.onclose = function (evt) {
 			var item = document.createElement("div");
 			item.innerHTML = "<b>Connection closed.</b>";
-			//document.getElementById("connection_status").innerText = "Connection closed.";
 			$("#connection_status").html("<span style=\"color: red;\">Connection closed.</span>");
 			setTimeout(clear_connection_status_text, 5000);
 			console.log("Connection closed.");
-			//appendLog(item);
 			setTimeout(make_connection, 5000);    // 再接続
 		};
 		conn.onmessage = function (evt) {
 			var messages = evt.data.split('\n');
-			//for (var i = 0; i < messages.length; i++) {
-			//	//var item = document.createElement("div");
-			//	//item.innerText = messages[i];
-			//	//appendLog(item);
-			//}
 			data = "";
 			while( data == "" ) data = messages.pop();
 			try {
 				data = JSON.parse(data);
-				//vue_data = Object.assign({}, vue_data, data);
-				//vm._data = Object.assign({}, vue_data, data);
 				Object.assign(vue_data, data);
-				//console.log(Object.keys(vue_data));
-				//console.log(vue_data);
-				//vm.$set( vm.$data, 0, vue_data );
-				//vm.$set(vm.$data, "timer", "b");
-				//vm.$destroy();
-				//vm = new Vue({
-				//	el: '#main_container',
-				//	data: Object.assign({}, vue_data)
-				//});
 				keys = Object.keys(vue_data).toString();
 				if( keys != root_keys ){
 					vm.$destroy();
@@ -94,7 +74,6 @@ window.onload = function () {
 					console.log('rebuilded');
 				}
 				vm.$forceUpdate();
-				//console.log(vm);
 			} catch(e) {
 				console.log(e);
 			}

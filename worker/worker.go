@@ -2,12 +2,12 @@ package worker
 
 import (
 	"fmt"
-	"time"
 	"net"
 	"os"
+	"time"
 
-	"../websocket_server"
 	"../int_trap"
+	"../websocket_server"
 )
 
 const (
@@ -20,8 +20,7 @@ type WorkerClient struct {
 	websocket_server.Client
 }
 
-
-func Run(hub *websocket_server.Hub){
+func Run(hub *websocket_server.Hub) {
 	//ticker := time.NewTicker(writePeriod)
 	//defer ticker.Stop()
 
@@ -54,7 +53,7 @@ func Run(hub *websocket_server.Hub){
 		select {
 		case conn := <-newConns:
 			go connection(conn, hub)
-		//case now := <-ticker.C:
+			//case now := <-ticker.C:
 			//message := now.Format(time.RFC3339)
 			//hub.Broadcast <- []byte(message)
 		}
@@ -99,7 +98,7 @@ func connection(conn net.Conn, hub *websocket_server.Hub) {
 	for {
 		select {
 		case data, alive := <-ch:
-			hub.Broadcast <-data
+			hub.Broadcast <- data
 			message := "sent "
 			conn.Write([]byte(message))
 			if alive == false {

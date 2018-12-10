@@ -1,28 +1,27 @@
 package parser
 
 import (
-	"strings"
-	"fmt"
-	"reflect"
 	"./functions"
+	"reflect"
+	"strings"
 )
 
 type PaseData struct {
-	a int
-	b int
+	a   int
+	b   int
 	str string
 }
 
 func check_char(s string, i int, c byte) bool {
 	if len(s) > i {
 		return s[i] == c
-	}else{
+	} else {
 		return false
 	}
 }
 
 func Parse(str string) string {
-	endterm := map[int]string {
+	endterm := map[int]string{
 		0: "",
 		1: "</p>",
 	}
@@ -40,10 +39,8 @@ func Parse(str string) string {
 	pos := 0
 	for pos < len(lines) {
 		v := lines[pos]
-		i := pos
 		tr := strings.Trim(v, " ")
 		tr = strings.Trim(tr, "\t")
-		fmt.Println(mode, ";", i, v)
 
 		if mode == 0 {
 			func_name = ""
@@ -74,7 +71,7 @@ func Parse(str string) string {
 				if mode == 0 {
 					if func_name == "" {
 						ret += v
-					}else{
+					} else {
 						ret += eval(func_name, "", body)
 					}
 				}
@@ -93,18 +90,18 @@ func Parse(str string) string {
 			idx := strings.Index(v, ")")
 			if idx >= 0 {
 				args += v[:idx]
-				if check_char(v, idx + 1, ':') {
+				if check_char(v, idx+1, ':') {
 					body += v[idx+2:]
 					mode = 2
-				}else{
+				} else {
 					body = strings.Trim(v[idx+1:], " ")
 					ret += eval(func_name, args, body)
 					mode = 0
 				}
-			}else{
+			} else {
 				args += v
 			}
-		}else if mode == 2 {
+		} else if mode == 2 {
 			body += "\n"
 			switch {
 			case tr == "" && len(v) < 4:
@@ -125,7 +122,6 @@ func Parse(str string) string {
 	}
 
 	ret = ret[:len(ret)-2]
-	fmt.Println(ret)
 
 	return ret
 }
@@ -135,16 +131,15 @@ func eval(func_name string, arg_string string, body string) string {
 	for i := range args {
 		args[i] = strings.Trim(args[i], " ")
 	}
-	fmt.Println("eval: ", func_name, args, body)
 	ret := ""
 
 	if func_name == "" {
 		// h1
 		ret += "<h1>" + body + "</h1>"
-	}else{
+	} else {
 		// Call a Sharp Function
 		var sf functions.SharpFunc
-		func_name = strings.ToUpper(string(func_name[0])) + func_name[1:]    // make sure that first character is upper case
+		func_name = strings.ToUpper(string(func_name[0])) + func_name[1:] // make sure that first character is upper case
 		function := reflect.ValueOf(&sf).MethodByName(func_name)
 		if function.IsValid() {
 			out := function.Call([]reflect.Value{reflect.ValueOf(args), reflect.ValueOf(body)})

@@ -1,12 +1,11 @@
 package functions
 
 import (
-	"strings"
 	"strconv"
+	"strings"
 )
 
 type SharpFunc struct {
-
 }
 
 // 外部参照可能な名前(1文字目が大文字)
@@ -40,9 +39,9 @@ func (sf SharpFunc) Input(args []string, body string) string {
 	if len(args) > 0 {
 		name = args[0]
 	}
-	return  "<label>" + body + " " +
-			"<input type=\"text\" class=\"form-control\" name=\"" + name + "\">" +
-			"</label>"
+	return "<label>" + body + " " +
+		"<input type=\"text\" class=\"form-control\" name=\"" + name + "\">" +
+		"</label>"
 }
 
 func (sf SharpFunc) Submit(args []string, body string) string {

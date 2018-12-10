@@ -50,7 +50,6 @@ func Call(fn *Callback) {
 	Unregister(fn)
 }
 
-
 type simpleCallback struct {
 	fn func()
 }
