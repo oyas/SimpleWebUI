@@ -51,7 +51,7 @@ window.onload = function () {
 			$("#connection_status").html("<span style=\"color: red;\">Connection closed.</span>");
 			setTimeout(clear_connection_status_text, 5000);
 			console.log("Connection closed.");
-			setTimeout(make_connection, 5000);    // 再接続
+			//setTimeout(make_connection, 5000);    // 再接続
 		};
 		conn.onmessage = function (evt) {
 			var messages = evt.data.split('\n');

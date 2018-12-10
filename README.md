@@ -8,9 +8,10 @@
 ## 使用方法
 
 1. `mark.md`を書き換えてWebの画面を作ります。
-2. `go run server.go` を実行して、サーバーを起動します。
-3. `localhost:8080` へアクセスしてWebの画面を表示します。
-4. アプリ側との通信は、`io.socket`を通して行います。
+2. `go build` を実行し、`SimpleWebUI` を作成します。
+3. `./SimpleWebUI` を実行して、サーバーを起動します。
+4. `localhost:8080` へアクセスしてWebの画面を表示します。
+5. アプリ側との通信は、`io.socket`を通して行います。
 
 
 ## mark.md の書き方
